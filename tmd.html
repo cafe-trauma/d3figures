@@ -1,0 +1,103 @@
+<!DOCTYPE>
+<meta charset="utf-8">
+<style>
+
+body {
+  width: 960px;
+  margin: auto;
+  font-family: Arial;
+}
+#target {
+  margin: 40px 0;
+}
+.wrapper {
+  position: relative;
+  display: inline-block;
+}
+.chart {
+  margin-bottom: 40px;
+}
+.star-title {
+  font-size: 24px;
+  font-weight: bold;
+}
+.star-label {
+  font-size: 11px;
+  pointer-events: none;
+}
+.star-origin {
+  fill: #333;
+}
+.star-axis {
+  stroke: #ccc;
+  stroke-width: 2px;
+  stroke-dasharray: 4 5;
+}
+.star-path {
+  stroke: #444;
+  stroke-width: 2px;
+  fill: #709CB1;
+  fill-opacity: 0.6;
+}
+
+</style>
+
+<body>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="d3-starPlot.js"></script>
+<script>
+
+var margin = {
+  top: 52,
+  right: 50,
+  bottom: 20,
+  left: 70
+};
+var width = 540 - margin.left - margin.right;
+var height = 540 - margin.top - margin.bottom;
+var labelMargin = 12;
+
+var scale = d3.scale.linear()
+  .domain([0, 100])
+  .range([0, 100])
+
+d3.json('tmd.json')
+  .get(function(error, rows) {
+    var star = d3.starPlot()
+      .width(width)
+      .properties([
+        'board',
+        'ceo',
+        'cmo',
+        'hcs'
+      ])
+      .scales(scale)
+      .labels([
+        'Hospital Board',
+        'Chief Executive Officer',
+        'Chief Medical Officer',
+        'Head of Clinical Services'
+      ])
+      .title(function(){ return "Trauma Medical Director Reporting"})
+      .margin(margin)
+      .labelMargin(labelMargin);
+
+    rows.forEach(function(d, i) {
+      var wrapper = d3.select('#target').append('div')
+        .attr('class', 'wrapper');
+
+      var svg = wrapper.append('svg')
+        .attr('class', 'chart')
+        .attr('width', width + margin.left + margin.right)
+        .attr('height', width + margin.top + margin.bottom)
+
+      var starG = svg.append('g')
+        .datum(d)
+        .call(star)
+    });
+  });
+
+</script>
+<div id='target'></div>
+</body>
