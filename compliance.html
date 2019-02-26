@@ -9,7 +9,7 @@
       }
 
       text.mono {
-        font-size: 9pt;
+        font-size: 18px;
         font-family: Consolas, courier;
         fill: #aaa;
       }
@@ -21,21 +21,27 @@
       text.axis-worktime {
         fill: #000;
       }
+      .dataset-button {
+        margin-top: 2em;
+        width: 10vw;
+        font-size: 25px;
+        margin-left: 1em;
+      }
     </style>
     <script src="http://d3js.org/d3.v3.js"></script>
   </head>
   <body>
-    <h3>Average Compliance of Trauma Centers</h3>
+    <h2>Average Compliance of Trauma Centers</h2>
     <div id="chart"></div>
     <div id="dataset-picker">
     </div>
     <script type="text/javascript">
-      var margin = { top: 50, right: 0, bottom: 100, left: 60 },
-          width = 960 - margin.left - margin.right,
-          height = 830 - margin.top - margin.bottom,
+      var margin = { top: 90, right: 0, bottom: 120, left: 90 },
+          width = 1260 - margin.left - margin.right,
+          height = 1100 - margin.top - margin.bottom,
           gridSize = Math.floor(width / 8),
-          legendElementWidth = gridSize/2,
           buckets = 9,
+          legendElementWidth = Math.floor(width / buckets) / 2,
 
           // unrelated colors
           //colors = ["#ffffd9","#edf8b1","#c7e9b4","#7fcdbb","#41b6c4","#1d91c0","#225ea8","#253494","#081d58"], // alternatively colorbrewer.YlGnBu[9]
